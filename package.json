@@ -1,0 +1,33 @@
+{
+  "name": "anylearn_api",
+  "version": "1.0.0",
+  "description": "api for anyLEARN by node.js",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon --import=tsx src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf ./build && tsc",
+    "start": "pnpm run build && node ./build/app.js"
+  },
+  "keywords": [
+    "anylearn",
+    "node"
+  ],
+  "type": "module",
+  "author": "cot",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "nodemon": "^3.1.9",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
