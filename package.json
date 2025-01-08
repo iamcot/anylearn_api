@@ -7,7 +7,7 @@
     "dev": "nodemon --import=tsx src/app.js",
     "test": "jest",
     "build": "rimraf ./build && tsc",
-    "start": "pnpm run build && node ./build/app.js"
+    "start": "npm run build && node ./build/app.js"
   },
   "keywords": [
     "anylearn",
