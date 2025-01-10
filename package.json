@@ -2,31 +2,34 @@
   "name": "anylearn_api",
   "version": "1.0.0",
   "description": "api for anyLEARN by node.js",
-  "main": "src/app.ts",
+  "main": "build/src/main",
   "scripts": {
-    "dev": "nodemon --import=tsx src/app.ts",
+    "dev": "nest start --watch",
     "test": "jest",
-    "build": "rimraf ./build && tsc",
-    "start": "node --import=tsx ./build/app.js"
+    "build": "nest build",
+    "start": "node ."
   },
   "keywords": [
     "anylearn",
     "node"
   ],
-  "type": "module",
   "author": "cot",
   "license": "MIT",
   "dependencies": {
+    "@nestjs/common": "^10.4.15",
+    "@nestjs/core": "^10.4.15",
+    "@nestjs/platform-express": "^10.4.15",
+    "@nestjs/typeorm": "^10.0.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2",
     "mysql2": "^3.12.0",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "0.3.11"
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
+    "@nestjs/cli": "^10.4.9",
+    "@nestjs/schematics": "^10.2.3",
     "@types/bcryptjs": "^2.4.6",
-    "@types/express": "^5.0.0",
     "@types/node": "^22.10.5",
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
