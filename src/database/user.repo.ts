@@ -9,6 +9,6 @@ export const UserRepo = AppDataSource.getRepository(User).extend({
     findByPhone: async (phone: string) => {
         return await UserRepo.findOneBy({
             phone: phone
-        })
+        }) as User
     },
 });

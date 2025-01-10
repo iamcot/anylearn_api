@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import express, { NextFunction } from "express";
 import { configDotenv } from "dotenv";
-import apiRoute from '@routes/api';
+import apiRoute from '@router/api';
 import { UserRepo } from '@database/user.repo';
-import authRoute from '@routes/auth';
+import authRoute from '@router/auth';
 
 const app = express();
 configDotenv();
