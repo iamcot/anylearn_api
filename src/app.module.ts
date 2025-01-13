@@ -4,10 +4,42 @@ import { DataSource } from 'typeorm';
 import { UserModule } from '@/user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from '@/common/configuration';
+import { CacheModule, CacheStore } from '@nestjs/cache-manager';
+import { redisStore } from "cache-manager-redis-yet";
+import { ScheduleModule } from '@nestjs/schedule';
+import { TaskService } from './schedule/taskservice';
+import { BullModule } from '@nestjs/bullmq';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { AppController } from '@/app.controller';
 
 @Module(
   {
     imports: [
+      EventEmitterModule.forRoot(),
+      BullModule.forRootAsync({
+        useFactory: () => ({
+          connection: {
+            host: 'localhost',
+            port: 6379,
+          }
+        })
+      }),
+      ScheduleModule.forRoot(),
+      CacheModule.registerAsync({
+        isGlobal: true,
+        useFactory: async () => {
+          const store = await redisStore({
+            socket: {
+              host: 'localhost',
+              port: 6379
+            }
+          });
+          return {
+            store: store as unknown as CacheStore,
+            ttl: 3 //3s
+          }
+        },
+      }),
       ConfigModule.forRoot({
         load: [configuration],
         cache: true
@@ -30,6 +62,8 @@ import configuration from '@/common/configuration';
       }),
       UserModule,
     ],
+    providers: [TaskService],
+    controllers: [AppController]
   })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
