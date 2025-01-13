@@ -1,4 +1,14 @@
-import { BadRequestException, Body, ClassSerializerInterceptor, Controller, Get, HttpException, HttpStatus, NotFoundException, Param, ParseArrayPipe, ParseIntPipe, Post, Query, Req, Res, UnauthorizedException, UseGuards, UseInterceptors } from '@nestjs/common';
+import { ClassSerializerInterceptor, 
+    Controller, 
+    Get, 
+    ParseArrayPipe, 
+    Post, 
+    Query, 
+    Req, 
+    Request, 
+    UseGuards, 
+    UseInterceptors 
+} from '@nestjs/common';
 import { UserLoginDto } from '@/user/dto/user-login.dto';
 import { UserService } from '@/user/user.service';
 import { RolesGuard } from '@/common/guard/roles.guard';
@@ -7,36 +17,22 @@ import { CacheInterceptor } from '@nestjs/cache-manager';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bullmq';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
-@UseGuards(RolesGuard)
-@UseInterceptors(LoggerInterceptor)
 export class UserController {
 
     constructor(
         private userService: UserService,
         @InjectQueue('user') private readonly userQueue: Queue,
     ) {}
-    
-    // @Get()
-    // userInfoByToken() {
-    //     throw new BadRequestException();
-    // }
 
-    @Post()
+    @UseGuards(JwtAuthGuard)
+    @Get('profile')
     @UseInterceptors(ClassSerializerInterceptor)
-    async login(@Body() userLoginDto: UserLoginDto) {
-        const result =  await this.userService.loginByPhone(userLoginDto.phone!, userLoginDto.password!);
-        if (result == -1) {
-            throw new NotFoundException("User not exists");
-        }
-        if (result == -2) {
-            throw new UnauthorizedException();
-        }
-        // await this.userQueue.add('update-tree', {
-        //     'user': result
-        // })
-        return result;
+    async profile(@Request() req: any) {
+        return req.user;
     }
 
     @Get('list')

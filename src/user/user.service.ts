@@ -21,27 +21,28 @@ export class UserService {
         });
     }
 
-    async loginByPhone(phone: string, password: string): Promise<number | User> {
-        const result = await this.userRepo.findOneBy({
-            phone: phone
-        });
+    // async loginByPhone(phone: string, password: string): Promise<number | User> {
+    //     console.log(phone);
+    //     const result = await this.userRepo.findOneBy({
+    //         phone: phone
+    //     });
 
-        if (!result) {
-            return -1;
-        }
-        const passChecked = await bcrypt.compare(password, result.password);
-        if (!passChecked) {
-            return -2;
-        }
-        this.eventEmiiter.emit('user.login', {
-            "userid": result.id
-        })
-        return result;
-    }
+    //     if (!result) {
+    //         return -1;
+    //     }
+    //     const passChecked = await bcrypt.compare(password, result.password);
+    //     if (!passChecked) {
+    //         return -2;
+    //     }
+    //     this.eventEmiiter.emit('user.login', {
+    //         "userid": result.id
+    //     })
+    //     return result;
+    // }
 
-    @OnEvent('user.login')
-    handleEventUserLogin(payload: any) {
-        this.logger.debug("Get Event user.login");
-        this.logger.debug(payload);
-    }
+    // @OnEvent('user.login')
+    // handleEventUserLogin(payload: any) {
+    //     this.logger.debug("Get Event user.login");
+    //     this.logger.debug(payload);
+    // }
 }

@@ -11,10 +11,12 @@ import { TaskService } from './schedule/taskservice';
 import { BullModule } from '@nestjs/bullmq';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AppController } from '@/app.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module(
   {
     imports: [
+      AuthModule,
       EventEmitterModule.forRoot(),
       BullModule.forRootAsync({
         useFactory: () => ({
