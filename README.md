@@ -17,5 +17,6 @@ anyLEARN is a booking platform that helps parents find and register for formal a
 - Earn and redeem reward points: Accumulate reward points through participation and use them to register for additional courses.
 - Manage course schedules and study plans: Keep track of your course timetable and organize your study plans effectively.
 
-[!WARNING] This project currently includes only the initial setup and has not yet implemented any logic
+> [!WARNING]
+> This project currently includes only the initial setup and has not yet implemented any logic
 
